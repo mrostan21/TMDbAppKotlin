@@ -1,23 +1,24 @@
 package com.example.tmdbapp.network
 
+import com.example.tmdbapp.data.Movie
+import com.example.tmdbapp.data.MovieList
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Url
 
-private const val BASE_URL =
-    "https://api.themoviedb.org"
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(ScalarsConverterFactory.create())
-    .baseUrl(BASE_URL)
-    .build()
 
 interface TMDbApiService {
-    @GET ("/3/movie/popular?api_key=67f050ae8c326d0949a91f7291d4b705&language=en-US&page=1")
-   suspend fun getPopularMovies() : String
+    @GET
+    suspend fun getMovies(@Url url: String) : Response<MovieList>
+
+
+
+
+
 }
 
-object TMDbApi {
-    val retrofitService : TMDbApiService by lazy {
-        retrofit.create(TMDbApiService::class.java)
-    }
-}
+
+
