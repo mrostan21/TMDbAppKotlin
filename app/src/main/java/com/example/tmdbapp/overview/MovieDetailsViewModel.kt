@@ -11,11 +11,11 @@ import kotlinx.coroutines.launch
 class MovieDetailsViewModel(movieKey: Int) : ViewModel() {
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<ApiStatus>()
-    private val _movie = MutableLiveData<Movie?>()
+    private val _movie = MutableLiveData<Movie>()
 
     // The external immutable LiveData for the request status
     val status: LiveData<ApiStatus> = _status
-    val movie: LiveData<Movie?> = _movie
+    val movie: LiveData<Movie> = _movie
     val Key = movieKey
     /**
      * Llama getPopularMovies() con init para poder mostrar status inmediatamente
@@ -38,7 +38,7 @@ class MovieDetailsViewModel(movieKey: Int) : ViewModel() {
                 _movie.value = movieResult
             } catch (e : Exception){
                 _status.value = ApiStatus.ERROR
-                _movie.value = null
+                _movie.value = Movie(1,"NotFound","as") //HARDCODED FIX
             }
 
         }

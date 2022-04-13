@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.tmdbapp.network.Movie
@@ -47,4 +48,13 @@ fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
             statusImageView.visibility = View.GONE
         }
     }
+}
+
+@BindingAdapter("setTitle")
+fun bindTitle(
+    textView: TextView,
+    data: LiveData<Movie>
+) {
+
+    textView.text = data.value?.title.toString()
 }

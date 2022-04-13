@@ -34,7 +34,6 @@ class PopularListFragment : Fragment() {
         binding.viewModel = viewModel
         binding.rvPopular.adapter = PopularListAdapter()
 
-
         return binding.root
     }
 
