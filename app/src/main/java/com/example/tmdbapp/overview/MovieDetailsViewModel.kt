@@ -8,45 +8,39 @@ import com.example.tmdbapp.network.Movie
 import com.example.tmdbapp.network.MovieApi
 import kotlinx.coroutines.launch
 
-enum class ApiStatus {LOADING, ERROR, DONE}
-
-
-/**
- * El [ViewModel] que esta vinculado al [PopularListFragment].
- */
-class PopularListViewModel : ViewModel() {
+class MovieDetailsViewModel(movieKey: Int) : ViewModel() {
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<ApiStatus>()
-    private val _movieList = MutableLiveData<List<Movie>>()
+    private val _movie = MutableLiveData<Movie?>()
 
     // The external immutable LiveData for the request status
     val status: LiveData<ApiStatus> = _status
-    val movieList: LiveData<List<Movie>> = _movieList
+    val movie: LiveData<Movie?> = _movie
+    val Key = movieKey
     /**
      * Llama getPopularMovies() con init para poder mostrar status inmediatamente
      */
     init {
-        getPopularMovies()
+        getMovieDetails()
     }
+
 
     /**
      * Obtiene informacion de las peliculas populares desde la  API Retrofit y actualiza
      * [MovieOverView] [List] [LiveData].
      */
-    private fun getPopularMovies() {
+    private fun getMovieDetails() {
         viewModelScope.launch {
             _status.value = ApiStatus.LOADING
             try {
-                val listResult = MovieApi.retrofitService.getMovies()
+                val movieResult = MovieApi.retrofitService.getMovieDetails(movieId = Key) //
                 _status.value = ApiStatus.DONE
-                _movieList.value = listResult.results
+                _movie.value = movieResult
             } catch (e : Exception){
                 _status.value = ApiStatus.ERROR
-                _movieList.value = listOf()
+                _movie.value = null
             }
 
         }
     }
-
-
 }

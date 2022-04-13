@@ -2,6 +2,7 @@ package com.example.tmdbapp
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.example.tmdbapp.network.Movie
 import com.example.tmdbapp.overview.ApiStatus
 import com.example.tmdbapp.overview.PopularListAdapter
 
-private const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w185"
+private const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w400"
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
 

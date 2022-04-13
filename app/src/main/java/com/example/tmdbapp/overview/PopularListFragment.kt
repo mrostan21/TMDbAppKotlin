@@ -26,7 +26,6 @@ class PopularListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentPopularListBinding.inflate(inflater)
-        //val binding = ListViewItemBinding.inflate(inflater)
 
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
@@ -35,6 +34,8 @@ class PopularListFragment : Fragment() {
         binding.viewModel = viewModel
         binding.rvPopular.adapter = PopularListAdapter()
 
+
         return binding.root
     }
+
 }
