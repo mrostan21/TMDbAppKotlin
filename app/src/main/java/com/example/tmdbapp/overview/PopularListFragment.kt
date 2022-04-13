@@ -6,16 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.tmdbapp.R
-import com.example.tmdbapp.databinding.FragmentOverviewBinding
+import com.example.tmdbapp.databinding.FragmentPopularListBinding
+
 
 
 /**
  * This fragment shows the the status of the popular movies web services transaction.
  */
-class OverviewFragment : Fragment() {
+class PopularListFragment : Fragment() {
 
-    private val viewModel: OverviewViewModel by viewModels()
+    private val viewModel: PopularListViewModel by viewModels()
 
     /**
      * Inflates the layout with Data Binding, sets its lifecycle owner to the OverviewFragment
@@ -25,13 +25,15 @@ class OverviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentOverviewBinding.inflate(inflater)
+        val binding = FragmentPopularListBinding.inflate(inflater)
+        //val binding = ListViewItemBinding.inflate(inflater)
 
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
         // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
+        binding.rvPopular.adapter = PopularListAdapter()
 
         return binding.root
     }

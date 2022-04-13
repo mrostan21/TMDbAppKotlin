@@ -4,18 +4,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tmdbapp.network.Movie
 import com.example.tmdbapp.network.MovieApi
 import kotlinx.coroutines.launch
 
+enum class ApiStatus {LOADING, ERROR, DONE}
+
+
 /**
- * El [ViewModel] que esta vinculado al [OverviewFragment].
+ * El [ViewModel] que esta vinculado al [PopularListFragment].
  */
-class OverviewViewModel : ViewModel() {
+class PopularListViewModel : ViewModel() {
     // The internal MutableLiveData that stores the status of the most recent request
-    private val _status = MutableLiveData<String>()
+    private val _status = MutableLiveData<ApiStatus>()
+    private val _movieList = MutableLiveData<List<Movie>>()
 
     // The external immutable LiveData for the request status
-    val status: LiveData<String> = _status
+    val status: LiveData<ApiStatus> = _status
+    val movieList: LiveData<List<Movie>> = _movieList
     /**
      * Llama getPopularMovies() con init para poder mostrar status inmediatamente
      */
@@ -25,15 +31,18 @@ class OverviewViewModel : ViewModel() {
 
     /**
      * Obtiene informacion de las peliculas populares desde la  API Retrofit y actualiza
-     * [MarsPhoto] [List] [LiveData].
+     * [MovieOverView] [List] [LiveData].
      */
     private fun getPopularMovies() {
         viewModelScope.launch {
+            _status.value = ApiStatus.LOADING
             try {
                 val listResult = MovieApi.retrofitService.getMovies()
-                _status.value = "Success: Page ${listResult.page}: ${listResult.results.size} movies retrieved"
+                _status.value = ApiStatus.DONE
+                _movieList.value = listResult.results
             } catch (e : Exception){
-                _status.value = "Failure: ${e.message}"
+                _status.value = ApiStatus.ERROR
+                _movieList.value = listOf()
             }
 
         }

@@ -7,3 +7,4 @@ data class Movie(
     val title: String,
     @Json(name = "poster_path") val posterPath: String
 )
+
