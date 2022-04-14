@@ -53,8 +53,8 @@ fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
 @BindingAdapter("setTitle")
 fun bindTitle(
     textView: TextView,
-    data: LiveData<Movie>
+    data: LiveData<Movie>?
 ) {
 
-    textView.text = data.value?.title.toString()
+    textView.text = data?.value?.title.toString()
 }
