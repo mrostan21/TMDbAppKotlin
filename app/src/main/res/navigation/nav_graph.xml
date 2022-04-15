@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/popularListFragment"
         android:name="com.example.tmdbapp.overview.PopularListFragment"
-        android:label="PopularListFragment" >
+        android:label="@string/popular_fragment">
         <action
             android:id="@+id/action_popularListFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
@@ -16,8 +16,8 @@
     <fragment
         android:id="@+id/movieDetailsFragment"
         android:name="com.example.tmdbapp.overview.MovieDetailsFragment"
-        android:label="movie_details_fragment"
-        tools:layout="@layout/movie_details_fragment" >
+        android:label="@string/movie_fragment"
+        tools:layout="@layout/movie_details_fragment">
         <argument
             android:name="movieId"
             app:argType="integer" />

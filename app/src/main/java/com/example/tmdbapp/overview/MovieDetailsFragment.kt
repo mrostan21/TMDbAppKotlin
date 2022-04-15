@@ -5,11 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
-import androidx.navigation.fragment.navArgs
-import com.example.tmdbapp.bindTitle
 import com.example.tmdbapp.databinding.MovieDetailsFragmentBinding
-import com.example.tmdbapp.network.Movie
+
 
 
 class MovieDetailsFragment : Fragment() {

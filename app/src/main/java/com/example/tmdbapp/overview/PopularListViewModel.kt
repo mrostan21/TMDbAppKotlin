@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tmdbapp.network.ApiStatus
 import com.example.tmdbapp.network.Movie
 import com.example.tmdbapp.network.MovieApi
 import kotlinx.coroutines.launch
 
-enum class ApiStatus {LOADING, ERROR, DONE}
+
 
 
 /**

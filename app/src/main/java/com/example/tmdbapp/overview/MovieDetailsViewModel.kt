@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tmdbapp.network.ApiStatus
 import com.example.tmdbapp.network.Movie
 import com.example.tmdbapp.network.MovieApi
 import kotlinx.coroutines.launch
@@ -38,7 +39,7 @@ class MovieDetailsViewModel(movieKey: Int) : ViewModel() {
                 _movie.value = movieResult
             } catch (e : Exception){
                 _status.value = ApiStatus.ERROR
-                _movie.value = Movie(1,"NotFound","as") //HARDCODED FIX
+                _movie.value = Movie()
             }
 
         }

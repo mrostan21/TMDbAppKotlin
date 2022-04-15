@@ -16,6 +16,7 @@ private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(BASE_URL)
     .build()
+enum class ApiStatus {LOADING, ERROR, DONE}
 
 interface ApiService {
     @GET("3/movie/popular?api_key=${API_KEY}&language=en-US&page=1")

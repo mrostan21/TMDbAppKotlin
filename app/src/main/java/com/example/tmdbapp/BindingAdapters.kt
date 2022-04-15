@@ -8,8 +8,8 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.tmdbapp.network.ApiStatus
 import com.example.tmdbapp.network.Movie
-import com.example.tmdbapp.overview.ApiStatus
 import com.example.tmdbapp.overview.PopularListAdapter
 
 private const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w400"
@@ -57,4 +57,57 @@ fun bindTitle(
 ) {
 
     textView.text = data?.value?.title.toString()
+}
+@BindingAdapter("setRelease")
+fun bindRelease(
+    textView: TextView,
+    data: LiveData<Movie>?
+) {
+
+    textView.text = data?.value?.releaseDate.toString()
+}
+
+@BindingAdapter("setOverview")
+fun bindOverview(
+    textView: TextView,
+    data: LiveData<Movie>?
+) {
+
+    textView.text = data?.value?.overview.toString()
+}
+
+@BindingAdapter("setOriginalLang")
+fun bindLang(
+    textView: TextView,
+    data: LiveData<Movie>?
+) {
+
+    textView.text = data?.value?.originalLanguage.toString()
+}
+
+@BindingAdapter("setVoteAvg")
+fun bindVoteAvg(
+    textView: TextView,
+    data: LiveData<Movie>?
+) {
+
+    textView.text = data?.value?.voteAverage.toString()
+}
+
+@BindingAdapter("setPopularity")
+fun bindPopularity(
+    textView: TextView,
+    data: LiveData<Movie>?
+) {
+
+    textView.text = data?.value?.popularity.toString()
+}
+
+@BindingAdapter("setGenre")
+fun bindGenre(
+    textView: TextView,
+    data: LiveData<Movie>?
+) {
+
+    textView.text = data?.value?.genreId.toString()
 }
