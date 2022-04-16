@@ -49,6 +49,26 @@ fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
         }
     }
 }
+@BindingAdapter("apiStatusText")
+fun bindStatusText(statusTextView: TextView, status: ApiStatus?) {
+
+    when (status) {
+
+        ApiStatus.LOADING -> {
+            statusTextView.visibility = View.VISIBLE
+            statusTextView.setText(R.string.loading)
+        }
+        ApiStatus.ERROR -> {
+            statusTextView.visibility = View.VISIBLE
+            statusTextView.setText(R.string.dwnld_error)
+        }
+        ApiStatus.DONE -> {
+            statusTextView.visibility = View.GONE
+        }
+
+    }
+}
+
 
 @BindingAdapter("setTitle")
 fun bindTitle(

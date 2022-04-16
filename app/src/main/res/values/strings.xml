@@ -4,5 +4,7 @@
     <string name="popular_fragment">Popular</string>
     <string name="movie_fragment" ></string>
     <string name="request_language">en-US</string>
+    <string name="loading">Loading...</string>
+    <string name="dwnld_error">Error downloading data. Swipe down to refresh</string>
 
 </resources>
