@@ -11,7 +11,11 @@
         android:label="@string/popular_fragment">
         <action
             android:id="@+id/action_popularListFragment_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment" />
+            app:destination="@id/movieDetailsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/slide_in"
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_popularListFragment_self"
             app:destination="@id/popularListFragment" />
@@ -26,6 +30,9 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_movieDetailsFragment_self"
-            app:destination="@id/movieDetailsFragment" />
+            app:destination="@id/movieDetailsFragment"
+            app:popUpTo="@id/popularListFragment"
+            app:popExitAnim="@anim/fade_out"
+            app:exitAnim="@anim/fade_out" />
     </fragment>
 </navigation>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.tmdbapp.R
 import com.example.tmdbapp.databinding.MovieDetailsFragmentBinding
@@ -45,9 +46,15 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val swipeLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipeToRefreshDetails)
         swipeLayout.setOnRefreshListener {
-            val action = MovieDetailsFragmentDirections
+            /*val action = MovieDetailsFragmentDirections
                 .actionMovieDetailsFragmentSelf(key.toInt())
-            this.view?.findNavController()?.navigate(action)
+            this.view?.findNavController()?.navigate(action)*/
+            val navController = findNavController()
+            navController.run {
+                popBackStack()
+                navigate(PopularListFragmentDirections.actionPopularListFragmentToMovieDetailsFragment(key.toInt()))
+            }
+
             swipeLayout.isRefreshing = false
         }
     }

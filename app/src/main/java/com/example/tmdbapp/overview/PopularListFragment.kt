@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.tmdbapp.R
@@ -44,11 +45,17 @@ class PopularListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val swipeLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipeToRefreshPopular)
         swipeLayout.setOnRefreshListener {
-            val action = PopularListFragmentDirections
+            /*val action = PopularListFragmentDirections
                 .actionPopularListFragmentSelf()
-            this.view?.findNavController()?.navigate(action)
+            this.view?.findNavController()?.navigate(action)*/
+            val navController = findNavController()
+            navController.run {
+                popBackStack()
+                navigate(R.id.popularListFragment)
+            }
             swipeLayout.isRefreshing = false
         }
+
     }
 
 }
