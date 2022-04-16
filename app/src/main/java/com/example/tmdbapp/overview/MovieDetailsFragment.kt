@@ -5,15 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.tmdbapp.R
 import com.example.tmdbapp.databinding.MovieDetailsFragmentBinding
-
 
 
 class MovieDetailsFragment : Fragment() {
 
 
     private lateinit var key: String
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +29,7 @@ class MovieDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-         val viewModel = MovieDetailsViewModel(key.toInt())
+        val viewModel = MovieDetailsViewModel(key.toInt())
         val binding = MovieDetailsFragmentBinding.inflate(inflater)
 
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
@@ -41,7 +42,15 @@ class MovieDetailsFragment : Fragment() {
         return binding.root
     }
 
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val swipeLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipeToRefreshDetails)
+        swipeLayout.setOnRefreshListener {
+            val action = MovieDetailsFragmentDirections
+                .actionMovieDetailsFragmentSelf(key.toInt())
+            this.view?.findNavController()?.navigate(action)
+            swipeLayout.isRefreshing = false
+        }
+    }
 
 
 }

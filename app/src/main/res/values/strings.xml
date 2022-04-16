@@ -2,5 +2,7 @@
     <string name="app_name">TMDbApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="popular_fragment">Popular</string>
-    <string name="movie_fragment" translatable="false"></string>
+    <string name="movie_fragment" ></string>
+    <string name="request_language">en-US</string>
+
 </resources>

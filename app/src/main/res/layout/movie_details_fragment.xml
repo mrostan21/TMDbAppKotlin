@@ -3,117 +3,128 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".overview.MovieDetailsFragment">
+
     <data>
+
         <variable
             name="viewModel"
             type="com.example.tmdbapp.overview.MovieDetailsViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefreshDetails"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_title"
-            setTitle="@{viewModel.movie}"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="TITLE" />
-
-        <TextView
-            android:id="@+id/tv_genre"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            setGenre="@{viewModel.movie}"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
-            tools:text="GENRE"/>
-
-        <TextView
-            android:id="@+id/tv_release_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            setRelease="@{viewModel.movie}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
-            app:layout_constraintTop_toBottomOf="@+id/tv_genre"
-            tools:text="RELEASEDATE" />
-
-        <TextView
-            android:id="@+id/tv_original_language"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            setOriginalLang="@{viewModel.movie}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
-            app:layout_constraintTop_toBottomOf="@+id/tv_release_date"
-            tools:text="ORIGINAL LANG" />
-
-        <TextView
-            android:id="@+id/tv_popularity"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            setPopularity="@{viewModel.movie}"
-            app:layout_constraintBottom_toTopOf="@+id/tv_overview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
-            app:layout_constraintTop_toBottomOf="@+id/vote_avg"
-            app:layout_constraintVertical_bias="0.0"
-            tools:text="POPULARITY" />
-
-        <TextView
-            android:id="@+id/vote_avg"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            setVoteAvg="@{viewModel.movie}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
-            app:layout_constraintTop_toBottomOf="@+id/tv_original_language"
-            tools:text="VOTEAVG" />
-
-        <TextView
-            android:id="@+id/tv_overview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            setOverview="@{viewModel.movie}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_poster_image"
-            app:layout_constraintVertical_bias="0.050000012"
-            tools:text="OVERVIEW" />
-
-        <ImageView
-            android:id="@+id/iv_poster_image"
-            imageUrl="@{viewModel.movie.posterPath}"
-            android:layout_width="150dp"
-            android:layout_height="200dp"
-            android:layout_margin="8dp"
-            android:scaleType="fitXY"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/backgrounds/scenic" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_title"
+                setTitle="@{viewModel.movie}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="TITLE" />
+
+            <TextView
+                android:id="@+id/tv_genre"
+                setGenre="@{viewModel.movie}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                tools:text="GENRE" />
+
+            <TextView
+                android:id="@+id/tv_release_date"
+                setRelease="@{viewModel.movie}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
+                app:layout_constraintTop_toBottomOf="@+id/tv_genre"
+                tools:text="RELEASEDATE" />
+
+            <TextView
+                android:id="@+id/tv_original_language"
+                setOriginalLang="@{viewModel.movie}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
+                app:layout_constraintTop_toBottomOf="@+id/tv_release_date"
+                tools:text="ORIGINAL LANG" />
+
+            <TextView
+                android:id="@+id/tv_popularity"
+                setPopularity="@{viewModel.movie}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_overview"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
+                app:layout_constraintTop_toBottomOf="@+id/vote_avg"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="POPULARITY" />
+
+            <TextView
+                android:id="@+id/vote_avg"
+                setVoteAvg="@{viewModel.movie}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toEndOf="@+id/iv_poster_image"
+                app:layout_constraintTop_toBottomOf="@+id/tv_original_language"
+                tools:text="VOTEAVG" />
+
+            <TextView
+                android:id="@+id/tv_overview"
+                setOverview="@{viewModel.movie}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.05"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_poster_image"
+                app:layout_constraintVertical_bias="0.050000012"
+                tools:text="OVERVIEW" />
+
+            <ImageView
+                android:id="@+id/iv_poster_image"
+                imageUrl="@{viewModel.movie.posterPath}"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </layout>

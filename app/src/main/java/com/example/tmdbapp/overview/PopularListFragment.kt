@@ -6,6 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.tmdbapp.R
 import com.example.tmdbapp.databinding.FragmentPopularListBinding
 
 
@@ -35,6 +39,16 @@ class PopularListFragment : Fragment() {
         binding.rvPopular.adapter = PopularListAdapter()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val swipeLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipeToRefreshPopular)
+        swipeLayout.setOnRefreshListener {
+            val action = PopularListFragmentDirections
+                .actionPopularListFragmentSelf()
+            this.view?.findNavController()?.navigate(action)
+            swipeLayout.isRefreshing = false
+        }
     }
 
 }

@@ -55,16 +55,16 @@ fun bindTitle(
     textView: TextView,
     data: LiveData<Movie>?
 ) {
-
-    textView.text = data?.value?.title.toString()
+    if (data?.value?.title != null)
+        textView.text = "Title: ${data.value?.title}"
 }
 @BindingAdapter("setRelease")
 fun bindRelease(
     textView: TextView,
     data: LiveData<Movie>?
 ) {
-
-    textView.text = data?.value?.releaseDate.toString()
+    if (data?.value?.releaseDate != null )
+        textView.text = "Release date: ${data?.value?.releaseDate}"
 }
 
 @BindingAdapter("setOverview")
@@ -72,8 +72,8 @@ fun bindOverview(
     textView: TextView,
     data: LiveData<Movie>?
 ) {
-
-    textView.text = data?.value?.overview.toString()
+    if (data?.value?.overview != " ")
+        textView.text = data?.value?.overview
 }
 
 @BindingAdapter("setOriginalLang")
@@ -81,8 +81,8 @@ fun bindLang(
     textView: TextView,
     data: LiveData<Movie>?
 ) {
-
-    textView.text = data?.value?.originalLanguage.toString()
+    if (data?.value?.releaseDate != null)
+        textView.text = "Original language: ${data?.value?.originalLanguage?.uppercase()}"
 }
 
 @BindingAdapter("setVoteAvg")
@@ -90,8 +90,8 @@ fun bindVoteAvg(
     textView: TextView,
     data: LiveData<Movie>?
 ) {
-
-    textView.text = data?.value?.voteAverage.toString()
+    if (data?.value?.voteAverage != null && data?.value?.voteAverage != 0.0)
+        textView.text = "Vote average: ${data?.value?.voteAverage.toString()}"
 }
 
 @BindingAdapter("setPopularity")
@@ -99,8 +99,8 @@ fun bindPopularity(
     textView: TextView,
     data: LiveData<Movie>?
 ) {
-
-    textView.text = data?.value?.popularity.toString()
+    if (data?.value?.popularity != null && data?.value?.popularity != 0.0 )
+        textView.text = "Popularity: ${data?.value?.popularity.toString()}"
 }
 
 @BindingAdapter("setGenre")
@@ -109,5 +109,9 @@ fun bindGenre(
     data: LiveData<Movie>?
 ) {
 
-    textView.text = data?.value?.genreId.toString()
+    val commaSeparatedGenres = data?.value?.genres?.joinToString {
+        it.name
+    }
+     if (commaSeparatedGenres != null) textView.text = "Genre(s): $commaSeparatedGenres"
+
 }

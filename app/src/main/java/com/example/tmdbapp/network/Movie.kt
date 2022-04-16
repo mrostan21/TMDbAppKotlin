@@ -6,7 +6,7 @@ data class Movie(
     val id: Int = 0,
     val title: String = " ",
     @Json(name = "release_date") val releaseDate: String = " ",
-    @Json(name = "genre_ids") val genreId: List<Int> = listOf(),
+     val genres: List<Genre> = listOf(),
     @Json(name = "poster_path") val posterPath: String = " ",
     @Json(name = "original_language") val originalLanguage: String = " ",
     val overview: String = " ",
