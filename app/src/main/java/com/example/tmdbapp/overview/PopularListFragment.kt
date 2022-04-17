@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.tmdbapp.R
 import com.example.tmdbapp.databinding.FragmentPopularListBinding
-
+import com.example.tmdbapp.network.MovieRepository
 
 
 /**
@@ -39,15 +40,15 @@ class PopularListFragment : Fragment() {
         binding.viewModel = viewModel
         binding.rvPopular.adapter = PopularListAdapter()
 
+
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val swipeLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipeToRefreshPopular)
         swipeLayout.setOnRefreshListener {
-            /*val action = PopularListFragmentDirections
-                .actionPopularListFragmentSelf()
-            this.view?.findNavController()?.navigate(action)*/
+
             val navController = findNavController()
             navController.run {
                 popBackStack()
@@ -57,5 +58,7 @@ class PopularListFragment : Fragment() {
         }
 
     }
+
+
 
 }

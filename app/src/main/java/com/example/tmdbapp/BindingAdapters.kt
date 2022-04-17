@@ -92,7 +92,7 @@ fun bindOverview(
     textView: TextView,
     data: LiveData<Movie>?
 ) {
-    if (data?.value?.overview != " ")
+    if (data?.value?.overview != "")
         textView.text = data?.value?.overview
 }
 

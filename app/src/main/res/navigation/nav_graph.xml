@@ -16,9 +16,6 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/slide_in"
             app:popExitAnim="@anim/fade_out" />
-        <action
-            android:id="@+id/action_popularListFragment_self"
-            app:destination="@id/popularListFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
@@ -28,11 +25,5 @@
         <argument
             android:name="movieId"
             app:argType="integer" />
-        <action
-            android:id="@+id/action_movieDetailsFragment_self"
-            app:destination="@id/movieDetailsFragment"
-            app:popUpTo="@id/popularListFragment"
-            app:popExitAnim="@anim/fade_out"
-            app:exitAnim="@anim/fade_out" />
     </fragment>
 </navigation>

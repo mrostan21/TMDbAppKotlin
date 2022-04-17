@@ -7,6 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.themoviedb.org"
 private const val API_KEY = "67f050ae8c326d0949a91f7291d4b705" //Posible fallo de seguridad, cambiar api key de lugar
@@ -21,10 +22,10 @@ private val retrofit = Retrofit.Builder()
 enum class ApiStatus {LOADING, ERROR, DONE}
 
 interface ApiService {
-    @GET("3/movie/popular?api_key=${API_KEY}&language=${LANGUAGE}&page=1")
-    suspend fun getMovies(): MoviePage
+    @GET("3/movie/popular?api_key=${API_KEY}&language=${LANGUAGE}")
+    suspend fun getMovies(@Query("page")listPage: Int = 1): MoviePage
 
-    @GET("3/movie/{id}?api_key=${API_KEY}&language=${LANGUAGE}&page=1")
+    @GET("3/movie/{id}?api_key=${API_KEY}&language=${LANGUAGE}")
     suspend fun getMovieDetails(@Path("id") movieId:Int): Movie
 }
 

@@ -56,4 +56,5 @@ class PopularListAdapter() : ListAdapter<Movie,PopularListAdapter.MovieViewHolde
              return ((oldItem.title == newItem.title) && (oldItem.posterPath == newItem.posterPath))
         }
     }
+
 }
