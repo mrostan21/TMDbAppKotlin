@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tmdbapp.network.ApiStatus
 import com.example.tmdbapp.network.Movie
 import com.example.tmdbapp.network.MovieApi
+import com.example.tmdbapp.network.MovieRepository
 import kotlinx.coroutines.launch
 
 class MovieDetailsViewModel(movieKey: Int) : ViewModel() {
@@ -17,7 +18,7 @@ class MovieDetailsViewModel(movieKey: Int) : ViewModel() {
     // The external immutable LiveData for the request status
     val status: LiveData<ApiStatus> = _status
     val movie: LiveData<Movie> = _movie
-    val Key = movieKey
+    val key = movieKey
     /**
      * Llama getPopularMovies() con init para poder mostrar status inmediatamente
      */
@@ -34,7 +35,7 @@ class MovieDetailsViewModel(movieKey: Int) : ViewModel() {
         viewModelScope.launch {
             _status.value = ApiStatus.LOADING
             try {
-                val movieResult = MovieApi.retrofitService.getMovieDetails(movieId = Key) //
+                val movieResult = MovieRepository.fetchMovieDetails(key)
                 _status.value = ApiStatus.DONE
                 _movie.value = movieResult
             } catch (e : Exception){

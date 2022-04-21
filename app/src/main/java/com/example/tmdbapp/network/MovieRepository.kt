@@ -1,6 +1,7 @@
 package com.example.tmdbapp.network
 
 import android.util.Log
+import kotlinx.coroutines.delay
 
 
 object MovieRepository {
@@ -33,5 +34,21 @@ object MovieRepository {
 
     fun getList(): List<Movie> {
         return mutableMovieList
+    }
+
+    suspend fun fetchMovieDetails(movieId: Int) : Movie{
+        val movieFound = mutableMovieList.firstOrNull { it.id == movieId }
+        if (movieFound?.isFullMovie == true) return movieFound
+        try {
+            val movieResult = MovieApi.retrofitService.getMovieDetails(movieId = movieId)
+            movieResult.isFullMovie = true
+            if (movieFound != null){
+                val movieIndex = mutableMovieList.indexOf(movieFound)
+                mutableMovieList[movieIndex] = movieResult
+            }
+            return movieResult
+        } catch (e : Exception){
+            throw e
+        }
     }
 }

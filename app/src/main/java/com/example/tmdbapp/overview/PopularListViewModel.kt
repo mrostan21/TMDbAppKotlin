@@ -23,6 +23,7 @@ class PopularListViewModel : ViewModel() {
     // The external immutable LiveData for the request status
     val status: LiveData<ApiStatus> = _status
     val movieList: LiveData<List<Movie>> = _movieList
+    var isLastPage: Boolean = false
 
     /**
      * Llama getPopularMovies() con init para poder mostrar status inmediatamente
@@ -52,12 +53,13 @@ class PopularListViewModel : ViewModel() {
         }
     }
 
-     fun getNextPopularMovies() {
+    fun getNextPopularMovies() {
         viewModelScope.launch {
             try {
                 MovieRepository.fetchNext()
                 val listResult = MovieRepository.getList()
                 _movieList.value = listResult
+                isLastPage = (MovieRepository.currentPage == MovieRepository.totalPages)
             } catch (e: Exception) {
 
             }

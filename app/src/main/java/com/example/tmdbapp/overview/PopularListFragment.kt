@@ -6,14 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.tmdbapp.R
 import com.example.tmdbapp.databinding.FragmentPopularListBinding
-import com.example.tmdbapp.network.MovieRepository
 
 
 /**
@@ -22,6 +19,8 @@ import com.example.tmdbapp.network.MovieRepository
 class PopularListFragment : Fragment() {
 
     private val viewModel: PopularListViewModel by viewModels()
+    var isLastPage: Boolean = false
+    var isLoading: Boolean = false
 
     /**
      * Inflates the layout with Data Binding, sets its lifecycle owner to the OverviewFragment
@@ -39,6 +38,30 @@ class PopularListFragment : Fragment() {
         // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
         binding.rvPopular.adapter = PopularListAdapter()
+        viewModel.movieList.observe(viewLifecycleOwner) {
+            (binding.rvPopular.adapter as PopularListAdapter)?.notifyDataSetChanged()
+            isLoading = false
+            isLastPage = viewModel.isLastPage
+        }
+
+
+
+        binding.rvPopular.addOnScrollListener(object :
+            PaginationScrollListener(binding.rvPopular.layoutManager as LinearLayoutManager) {
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+
+            override fun loadMoreItems() {
+                isLoading = true
+                viewModel.getNextPopularMovies()
+            }
+        })
+
 
 
         return binding.root
@@ -58,7 +81,4 @@ class PopularListFragment : Fragment() {
         }
 
     }
-
-
-
 }
