@@ -11,6 +11,7 @@ import coil.load
 import com.example.tmdbapp.network.ApiStatus
 import com.example.tmdbapp.network.Movie
 import com.example.tmdbapp.overview.PopularListAdapter
+import com.google.android.material.progressindicator.CircularProgressIndicator
 
 private const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w400"
 @BindingAdapter("imageUrl")
@@ -31,14 +32,13 @@ fun bindRecyclerView(recyclerView: RecyclerView,
     adapter.submitList(data)
 }
 
-@BindingAdapter("apiStatus")
-fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
+@BindingAdapter("apiStatusImage")
+fun bindStatusImage(statusImageView: ImageView, status: ApiStatus?) {
 
     when (status) {
 
         ApiStatus.LOADING -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.loading_animation)
+            statusImageView.visibility = View.GONE
             }
         ApiStatus.ERROR -> {
             statusImageView.visibility = View.VISIBLE
@@ -49,6 +49,24 @@ fun bindStatus(statusImageView: ImageView, status: ApiStatus?) {
         }
     }
 }
+
+@BindingAdapter("apiStatusProgress")
+fun bindStatusImage(statusProgressIndicator: CircularProgressIndicator, status: ApiStatus?) {
+
+    when (status) {
+
+        ApiStatus.LOADING -> {
+            statusProgressIndicator.visibility = View.VISIBLE
+        }
+        ApiStatus.ERROR -> {
+            statusProgressIndicator.visibility = View.GONE
+        }
+        ApiStatus.DONE -> {
+            statusProgressIndicator.visibility = View.GONE
+        }
+    }
+}
+
 @BindingAdapter("apiStatusText")
 fun bindStatusText(statusTextView: TextView, status: ApiStatus?) {
 

@@ -1,50 +1,51 @@
 package com.example.tmdbapp.overview
 
 import android.os.Bundle
+import android.util.Log
+import android.view.*
+import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.tmdbapp.R
 import com.example.tmdbapp.databinding.FragmentPopularListBinding
+import com.example.tmdbapp.network.MovieRepository
 
 
-/**
- * This fragment shows the the status of the popular movies web services transaction.
- */
 class PopularListFragment : Fragment() {
 
     private val viewModel: PopularListViewModel by viewModels()
     var isLastPage: Boolean = false
     var isLoading: Boolean = false
+    private val swipeLayout : SwipeRefreshLayout?
+         get() = view?.findViewById(R.id.swipeToRefreshPopular)
 
-    /**
-     * Inflates the layout with Data Binding, sets its lifecycle owner to the OverviewFragment
-     * to enable Data Binding to observe LiveData, and sets up the RecyclerView with an adapter.
-     */
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentPopularListBinding.inflate(inflater)
 
-        // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
-        // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
         binding.rvPopular.adapter = PopularListAdapter()
         viewModel.movieList.observe(viewLifecycleOwner) {
             (binding.rvPopular.adapter as PopularListAdapter)?.notifyDataSetChanged()
             isLoading = false
+            swipeLayout?.isRefreshing = false
             isLastPage = viewModel.isLastPage
+
         }
-
-
 
         binding.rvPopular.addOnScrollListener(object :
             PaginationScrollListener(binding.rvPopular.layoutManager as LinearLayoutManager) {
@@ -63,22 +64,42 @@ class PopularListFragment : Fragment() {
         })
 
 
-
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val swipeLayout = view.findViewById<SwipeRefreshLayout>(R.id.swipeToRefreshPopular)
-        swipeLayout.setOnRefreshListener {
 
-            val navController = findNavController()
-            navController.run {
-                popBackStack()
-                navigate(R.id.popularListFragment)
-            }
-            swipeLayout.isRefreshing = false
+        swipeLayout?.setOnRefreshListener {
+            viewModel.refreshMovies()
         }
 
+
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+        val search = menu.findItem(R.id.app_bar_search)
+
+        search.isVisible = true
+        val searchView = search?.actionView as SearchView
+        searchView.queryHint = "Search by titles!"
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.getFiltered(newText)
+                return true
+            }
+
+
+        })
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+
+
+
 }

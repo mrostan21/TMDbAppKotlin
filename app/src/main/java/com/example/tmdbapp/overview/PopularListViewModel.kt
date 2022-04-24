@@ -24,6 +24,7 @@ class PopularListViewModel : ViewModel() {
     val status: LiveData<ApiStatus> = _status
     val movieList: LiveData<List<Movie>> = _movieList
     var isLastPage: Boolean = false
+    var isSearching: Boolean = false
 
     /**
      * Llama getPopularMovies() con init para poder mostrar status inmediatamente
@@ -53,7 +54,10 @@ class PopularListViewModel : ViewModel() {
         }
     }
 
-    fun getNextPopularMovies() {
+    fun getNextPopularMovies(): Boolean {
+        if (isSearching) {
+            return false
+        }
         viewModelScope.launch {
             try {
                 MovieRepository.fetchNext()
@@ -65,7 +69,23 @@ class PopularListViewModel : ViewModel() {
             }
 
         }
+        return true
     }
 
+    fun getFiltered(search: String?) {
+        isSearching = !search.isNullOrEmpty()
+        val listResult =
+            MovieRepository.getList().filter { it.title.lowercase().contains(search!!.lowercase()) }
+        _movieList.value = listResult
+
+
+    }
+
+    fun refreshMovies() {
+        viewModelScope.launch {
+            MovieRepository.refreshMovies()
+            _movieList.value = MovieRepository.getList()
+        }
+    }
 
 }

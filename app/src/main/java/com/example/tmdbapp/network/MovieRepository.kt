@@ -15,7 +15,7 @@ object MovieRepository {
     private var isLoading: Boolean = false
 
     suspend fun fetchNext() {
-        if ((currentPage > totalPages) || isLoading ) return
+        if ((currentPage > totalPages) || isLoading) return
         isLoading = true
         try {
             val listResult = MovieApi.retrofitService.getMovies(currentPage)
@@ -36,19 +36,28 @@ object MovieRepository {
         return mutableMovieList
     }
 
-    suspend fun fetchMovieDetails(movieId: Int) : Movie{
+    suspend fun fetchMovieDetails(movieId: Int): Movie {
         val movieFound = mutableMovieList.firstOrNull { it.id == movieId }
         if (movieFound?.isFullMovie == true) return movieFound
         try {
             val movieResult = MovieApi.retrofitService.getMovieDetails(movieId = movieId)
             movieResult.isFullMovie = true
-            if (movieFound != null){
+            if (movieFound != null) {
                 val movieIndex = mutableMovieList.indexOf(movieFound)
                 mutableMovieList[movieIndex] = movieResult
             }
             return movieResult
-        } catch (e : Exception){
+        } catch (e: Exception) {
             throw e
         }
     }
+
+     suspend fun refreshMovies(){
+        mutableMovieList.clear()
+         currentPage = 1
+         totalPages = 1
+         totalResults = 0
+         fetchNext()
+    }
+
 }

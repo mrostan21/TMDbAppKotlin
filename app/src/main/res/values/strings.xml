@@ -6,5 +6,8 @@
     <string name="request_language">en-US</string>
     <string name="loading">Loading...</string>
     <string name="dwnld_error">Error downloading data. Swipe down to refresh</string>
+    <string name="search">Search</string>
+    <string name="poster_image">Poster Image</string>
+    <string name="loading_status">loadingStatus</string>
 
 </resources>
