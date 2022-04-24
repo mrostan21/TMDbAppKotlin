@@ -25,7 +25,6 @@ object MovieRepository {
             totalResults = listResult.totalResults
             isLoading = false
         } catch (e: Exception) {
-            Log.e("TMDb", "exception", e);
             isLoading = false
             throw e
         }
@@ -39,25 +38,23 @@ object MovieRepository {
     suspend fun fetchMovieDetails(movieId: Int): Movie {
         val movieFound = mutableMovieList.firstOrNull { it.id == movieId }
         if (movieFound?.isFullMovie == true) return movieFound
-        try {
-            val movieResult = MovieApi.retrofitService.getMovieDetails(movieId = movieId)
-            movieResult.isFullMovie = true
-            if (movieFound != null) {
-                val movieIndex = mutableMovieList.indexOf(movieFound)
-                mutableMovieList[movieIndex] = movieResult
-            }
-            return movieResult
-        } catch (e: Exception) {
-            throw e
+
+        val movieResult = MovieApi.retrofitService.getMovieDetails(movieId = movieId)
+        movieResult.isFullMovie = true
+        if (movieFound != null) {
+            val movieIndex = mutableMovieList.indexOf(movieFound)
+            mutableMovieList[movieIndex] = movieResult
         }
+        return movieResult
+
     }
 
-     suspend fun refreshMovies(){
+    suspend fun refreshMovies() {
         mutableMovieList.clear()
-         currentPage = 1
-         totalPages = 1
-         totalResults = 0
-         fetchNext()
+        currentPage = 1
+        totalPages = 1
+        totalResults = 0
+        fetchNext()
     }
 
 }

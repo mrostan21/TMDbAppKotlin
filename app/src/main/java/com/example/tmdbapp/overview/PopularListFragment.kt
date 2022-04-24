@@ -1,18 +1,15 @@
 package com.example.tmdbapp.overview
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.tmdbapp.R
 import com.example.tmdbapp.databinding.FragmentPopularListBinding
-import com.example.tmdbapp.network.MovieRepository
+import java.lang.Exception
 
 
 class PopularListFragment : Fragment() {
@@ -47,6 +44,7 @@ class PopularListFragment : Fragment() {
 
         }
 
+
         binding.rvPopular.addOnScrollListener(object :
             PaginationScrollListener(binding.rvPopular.layoutManager as LinearLayoutManager) {
             override fun isLastPage(): Boolean {
@@ -71,7 +69,12 @@ class PopularListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         swipeLayout?.setOnRefreshListener {
+          try {
             viewModel.refreshMovies()
+          }
+          catch (e: Exception){
+              swipeLayout?.isRefreshing = false
+          }
         }
 
 

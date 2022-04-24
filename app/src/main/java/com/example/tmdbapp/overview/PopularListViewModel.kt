@@ -1,15 +1,15 @@
 package com.example.tmdbapp.overview
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.tmdbapp.network.ApiStatus
 import com.example.tmdbapp.network.Movie
 import com.example.tmdbapp.network.MovieApi
 import com.example.tmdbapp.network.MovieRepository
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 
 
 /**
@@ -25,6 +25,10 @@ class PopularListViewModel : ViewModel() {
     val movieList: LiveData<List<Movie>> = _movieList
     var isLastPage: Boolean = false
     var isSearching: Boolean = false
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { context, exception ->
+        Log.e("Exception", "Refreshing failed", exception)
+    }
 
     /**
      * Llama getPopularMovies() con init para poder mostrar status inmediatamente
@@ -82,7 +86,7 @@ class PopularListViewModel : ViewModel() {
     }
 
     fun refreshMovies() {
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineExceptionHandler) {
             MovieRepository.refreshMovies()
             _movieList.value = MovieRepository.getList()
         }
